@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		
 		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "Id", userId));
-		return this.userToDto(user);
+		return this.userToDto(user); 
 	}
 
 	@Override
