@@ -4,15 +4,26 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.akansha.app.blog.entities.User;
 import com.akansha.app.blog.exceptions.ResourceNotFoundException;
 import com.akansha.app.blog.payloads.UserDto;
 import com.akansha.app.blog.repositories.UserRepo;
+
+@Service
 public class UserServiceImpl implements UserService {
 
+	// @Autowired -- implementation class object is injected
+	// when spring container gets started, all Repositories interfaces are scanned
+	// and dynamically created implementation class(proxy classes) kept in pacakge, and 
+	// spring creates object for them(for implementation classes) and whener autowired then 
+	// object of this class gets injected.
+	
 	@Autowired
 	private UserRepo userRepo;
+	
+	
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		// TODO Auto-generated method stub
@@ -57,8 +68,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUser(Integer userId) {
 		
-		User user = this.userRepo.findById(userId).orElseThrow(()-> ResourceNotFoundException("User", "Id", userId));
-		this.userRepo.delete((user);
+		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "Id", userId));
+		this.userRepo.delete(user);
 		// TODO Auto-generated method stub
 
 	}
