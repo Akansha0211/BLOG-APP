@@ -3,6 +3,7 @@ package com.akansha.app.blog.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepo userRepo;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	
 	@Override
@@ -73,22 +77,20 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 
 	}
+	
+	
 	private User dtoToUser(UserDto userDto) {
-		User user = new User();
-		user.setId(userDto.getId());
-		user.setName(userDto.getName());
-		user.setEmail(userDto.getEmail());
-		user.setAbout(userDto.getAbout());
-		user.setPassword(userDto.getPassword());
+//		User user = new User();		
+//		user.setId(userDto.getId());
+//		user.setName(userDto.getName());
+//		user.setEmail(userDto.getEmail());
+//		user.setAbout(userDto.getAbout());
+//		user.setPassword(userDto.getPassword());
+		User user = this.modelMapper.map(userDto, User.class);
 		return user;
 	}
 	public UserDto userToDto(User user) {
-		UserDto userDto = new UserDto();
-		userDto.setId(user.getId());
-		userDto.setEmail(user.getEmail());
-		userDto.setName(user.getName());
-		userDto.setAbout(user.getAbout());
-		userDto.setPassword(user.getPassword());
+		UserDto userDto = this.modelMapper.map(user, UserDto.class);		
 		return userDto;
 	}
 
