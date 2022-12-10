@@ -30,6 +30,9 @@ public class UserController {
 	
 	// POST -- create user
 	
+//	When Spring Boot finds an argument annotated with @Valid, it automatically bootstraps the 
+//	default JSR 380 implementation — Hibernate Validator — and validates the argument.
+	
 	@PostMapping("/")
 	public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
 		UserDto createUserDto = this.userService.createUser(userDto);
@@ -38,7 +41,7 @@ public class UserController {
 	
 	// PUT -- update user
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto, @PathVariable("userId") Integer uid){
+	public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto userDto, @PathVariable("userId") Integer uid){
 		UserDto updatedUser = this.userService.updateUser(userDto, uid);
 		return ResponseEntity.ok(updatedUser);
 	}
