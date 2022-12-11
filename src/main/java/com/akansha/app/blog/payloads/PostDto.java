@@ -5,6 +5,13 @@ import java.util.Date;
 import com.akansha.app.blog.entities.Category;
 import com.akansha.app.blog.entities.User;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class PostDto {
 	
 	private String title;
@@ -15,9 +22,9 @@ public class PostDto {
 	
 	private Date addedDate;
 	
-	private Category category;
+	private CategoryDto category;
 	
-	private User user;
+	private UserDto user;
 		
 	
 }
