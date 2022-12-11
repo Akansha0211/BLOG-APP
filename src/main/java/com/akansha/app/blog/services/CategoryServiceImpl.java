@@ -67,7 +67,7 @@ public class CategoryServiceImpl implements CategoryService{
 	public List<CategoryDto> getCategories() {
 		// TODO Auto-generated method stub
 		List<Category> categories= this.categoryRepo.findAll();
-		List<CategoryDto> categoryDtos = categories.stream().map((category)-> this.modelMapper.map(categories, CategoryDto.class)).collect(Collectors.toList());
+		List<CategoryDto> categoryDtos = categories.stream().map((category)-> this.modelMapper.map(category, CategoryDto.class)).collect(Collectors.toList());
 		return categoryDtos;
 	}
 	
