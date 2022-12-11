@@ -81,7 +81,7 @@ public class PostServiceImpl implements PostService{
 		
 		Category category = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "category id",categoryId));
 		List<Post> posts = this.postRepo.findByCategory(category);
-		List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
+		List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
 		return postDtos;
 	}
 
@@ -90,7 +90,7 @@ public class PostServiceImpl implements PostService{
 		// TODO Auto-generated method stub
 		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "user id", userId));
 		List<Post> posts = this.postRepo.getByUser(user);
-		List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
+		List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(post, PostDto.class)).collect(Collectors.toList());
 		return postDtos;
 		
 	}
