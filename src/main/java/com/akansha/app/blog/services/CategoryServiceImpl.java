@@ -5,12 +5,14 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.akansha.app.blog.entities.Category;
 import com.akansha.app.blog.exceptions.ResourceNotFoundException;
 import com.akansha.app.blog.payloads.CategoryDto;
 import com.akansha.app.blog.repositories.CategoryRepo;
 
+@Service
 public class CategoryServiceImpl implements CategoryService{
 
 	 // interface is for loose coupling , How ?? 

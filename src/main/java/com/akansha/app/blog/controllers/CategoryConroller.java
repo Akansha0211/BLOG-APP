@@ -2,6 +2,7 @@ package com.akansha.app.blog.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +19,7 @@ import com.akansha.app.blog.payloads.CategoryDto;
 import com.akansha.app.blog.services.CategoryService;
 
 @RestController
-@RequestMapping("/apis/categories")
+@RequestMapping("/api/categories")
 public class CategoryConroller {
 	// Controller --> exposes our resources through an endpoint (deals with coming request)
 	// LAYERED ARCHITECTURE
@@ -34,6 +35,7 @@ public class CategoryConroller {
 	// categoryService impl
 	// all apis exposed using CategoryController
 	
+	@Autowired
 	private CategoryService categoryService;
 	// create
 	@PostMapping("/")

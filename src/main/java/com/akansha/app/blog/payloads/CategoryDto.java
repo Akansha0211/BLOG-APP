@@ -8,6 +8,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryDto {
+	
+	// to be done..
+	//  Validation in categoryDto using Hibernate Validator
+	//  Enable those validations using CategoryController
+	
 	private Integer categoryId;
 	private String categoryTitle;
 	private String categoryDescription;
