@@ -76,9 +76,9 @@ public class PostController {
 		
 		// update post
 		@PutMapping("/posts/{postId}")
-		public ApiResponse updatePost(@RequestBody PostDto postDto, @PathVariable Integer postId){
+		public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable Integer postId){
 			PostDto updatePost = this.postService.updatePost(postDto, postId);
-			return new ApiResponse("Post is successfully deleted !!", true);
+			return new ResponseEntity<PostDto>(updatePost, HttpStatus.OK);
 		}
 		
 }
