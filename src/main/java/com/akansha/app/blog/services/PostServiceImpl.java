@@ -1,7 +1,8 @@
-package com.akansha.app.blog.services;
+ package com.akansha.app.blog.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,15 +78,23 @@ public class PostServiceImpl implements PostService{
 	@Override
 	public List<PostDto> getPostsByCategory(Integer categoryId) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		Category category = this.categoryRepo.findById(categoryId).orElseThrow(()-> new ResourceNotFoundException("Category", "category id",categoryId));
+		List<Post> posts = this.postRepo.findByCategory(category);
+		List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
+		return postDtos;
 	}
 
 	@Override
 	public List<PostDto> getPostsByUser(Integer userId) {
 		// TODO Auto-generated method stub
-		return null;
+		User user = this.userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("User", "user id", userId));
+		List<Post> posts = this.postRepo.getByUser(user);
+		List<PostDto> postDtos = posts.stream().map((post)-> this.modelMapper.map(posts, PostDto.class)).collect(Collectors.toList());
+		return postDtos;
+		
 	}
-
+	
 	@Override
 	public List<PostDto> searchPosts(String keyword) {
 		// TODO Auto-generated method stub
