@@ -16,5 +16,5 @@ public class BlogApplication {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-
+	
 }
