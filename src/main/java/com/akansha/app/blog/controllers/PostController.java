@@ -32,8 +32,8 @@ public class PostController {
 	
 
 	
-	@Value("${project.image}")
-	private String path;
+//	@Value("${project.image}")
+//	private String path;
 	
 	// create
 	@PostMapping("/user/{userId}/category/{categoryId}/posts")
