@@ -7,6 +7,8 @@ import com.akansha.app.blog.payloads.UserDto;
 public interface UserService {
 	 
 	// don't pass entity into service, use payload class instead (to transfer data)
+	
+	UserDto registerNewUser(UserDto user);
 	UserDto createUser(UserDto user);
 	UserDto updateUser(UserDto user, Integer userId);
 	UserDto getUserById(Integer userId);

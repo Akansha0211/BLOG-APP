@@ -5,11 +5,15 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.akansha.app.blog.config.AppConstants;
+import com.akansha.app.blog.entities.Role;
 import com.akansha.app.blog.entities.User;
 import com.akansha.app.blog.exceptions.ResourceNotFoundException;
 import com.akansha.app.blog.payloads.UserDto;
+import com.akansha.app.blog.repositories.RoleRepo;
 import com.akansha.app.blog.repositories.UserRepo;
 
 @Service
@@ -27,6 +31,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private RoleRepo roleRepo;
 	
 	@Override
 	public UserDto createUser(UserDto userDto) {
@@ -92,6 +101,23 @@ public class UserServiceImpl implements UserService {
 	public UserDto userToDto(User user) {
 		UserDto userDto = this.modelMapper.map(user, UserDto.class);		
 		return userDto;
+	}
+
+	@Override
+	public UserDto registerNewUser(UserDto userDto) {
+		// TODO Auto-generated method stub
+		
+		User user = this.modelMapper.map(userDto, User.class);
+		//encoded the password
+		user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+		
+		// roles (set it to new user--> normal_user, 
+		// wnehever a user is registering using register api , then that user is assigned normal user role only
+		 Role role = this.roleRepo.findById(AppConstants.NORMAL_USER).get();
+		user.getRoles().add(role);
+		
+		User newUser = this.userRepo.save(user);
+		return this.modelMapper.map(newUser, UserDto.class);
 	}
 
 }
