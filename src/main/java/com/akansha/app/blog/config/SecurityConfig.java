@@ -16,16 +16,29 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.akansha.app.blog.security.CustomUserDetailService;
 import com.akansha.app.blog.security.JwtAuthenticationEntryPoint;
 import com.akansha.app.blog.security.JwtAuthenticationFilter;
 
 
+
 @Configuration
 @EnableWebSecurity
+@EnableWebMvc
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+	
+	public static final String[] PUBLIC_URLS = {
+			"/api/v1/auth/**",
+			"/v3/api_docs",
+			"/api/users/",
+			"/v2/api-docs",
+			"/swagger-resources/**",
+			"/swagger-ui/**",
+			"/webjars/**"
+	};
 	
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
@@ -41,8 +54,8 @@ public class SecurityConfig {
 		http
 		.csrf()
 		.disable()
-		.authorizeHttpRequests()
-		.requestMatchers("/api/v1/auth/**").permitAll()
+		.authorizeHttpRequests()	
+		.requestMatchers(PUBLIC_URLS).permitAll()
 		.anyRequest()
 		.authenticated()
 		.and()
@@ -50,7 +63,6 @@ public class SecurityConfig {
 		.and()
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		
 		
 		http.addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 		
@@ -79,6 +91,6 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
-	
+	// requestMatchers("/api/v1/auth/**").permitAll()
 }
 

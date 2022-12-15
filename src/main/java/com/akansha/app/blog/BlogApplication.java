@@ -14,6 +14,7 @@ import com.akansha.app.blog.config.AppConstants;
 import com.akansha.app.blog.entities.Role;
 import com.akansha.app.blog.repositories.RoleRepo;
 
+
 @SpringBootApplication
 public class BlogApplication implements CommandLineRunner{
 	
