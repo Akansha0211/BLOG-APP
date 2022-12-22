@@ -2,13 +2,16 @@ package com.akansha.app.blog;
 
 import java.util.List;
 
+import org.apache.catalina.filters.CorsFilter;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 import com.akansha.app.blog.config.AppConstants;
 import com.akansha.app.blog.entities.Role;
@@ -57,5 +60,7 @@ public class BlogApplication implements CommandLineRunner{
 		}
 		  
 	}
+	
+	
 	
 }
