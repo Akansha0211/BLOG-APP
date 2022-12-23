@@ -1,5 +1,7 @@
 package com.akansha.app.blog.security;
 
+import com.akansha.app.blog.payloads.UserDto;
+
 import lombok.Data;
 
 @Data
