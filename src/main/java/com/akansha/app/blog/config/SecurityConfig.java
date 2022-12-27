@@ -2,7 +2,7 @@ package com.akansha.app.blog.config;
 
 import java.util.Arrays;
 
-import org.apache.catalina.filters.CorsFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +22,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import  org.springframework.web.filter.CorsFilter ;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.akansha.app.blog.security.CustomUserDetailService;
@@ -98,59 +99,41 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 	
-//	@Bean
-//	public FilterRegistrationBean coresFilter() {
-//		
-//		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//		
-//		CorsConfiguration corsConfiguration = new CorsConfiguration();
-//		
-//		corsConfiguration.setAllowCredentials(null);
-//		corsConfiguration.addAllowedOriginPattern("*");
-//		corsConfiguration.addAllowedHeader("Authorization");
-//		corsConfiguration.addAllowedHeader("Content-Type");
-//		corsConfiguration.addAllowedHeader("Accept");
-//		corsConfiguration.addAllowedHeader("POST");
-//		corsConfiguration.addAllowedMethod("GET");
-//		corsConfiguration.addAllowedMethod("DELETE");
-//		corsConfiguration.addAllowedMethod("PUT");
-//		corsConfiguration.addAllowedMethod("OPTIONS");
-//		corsConfiguration.setMaxAge(3600L);
-//		
-//		source.registerCorsConfiguration("/**", corsConfiguration);
-//		
-//		
-//		FilterRegistrationBean bean = new FilterRegistrationBean(new org.springframework.web.filter.CorsFilter(source));
-//		return bean;
-//	}
+	@Bean
+    public FilterRegistrationBean corsFilter() {
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedOriginPattern("*");
+        
+        configuration.addAllowedHeader("Authorization");
+      	configuration.addAllowedHeader("Content-Type");
+      	configuration.addAllowedHeader("Accept");
+        
+        configuration.addAllowedMethod("POST");
+        configuration.addAllowedMethod("GET");
+        configuration.addAllowedMethod("DELETE");
+        configuration.addAllowedMethod("PUT");
+        configuration.addAllowedMethod("OPTIONS");
+        configuration.setMaxAge(3600L);
+        // setAllowCredentials(true) is important, otherwise:
+        // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
+        
+        // setAllowedHeaders is important! Without it, OPTIONS preflight request
+        // will fail with 403 Invalid CORS request
+        
+        //configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+      
+		
+		source.registerCorsConfiguration("/**", configuration);
+		
+		final FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+		bean.setOrder(-110);
+		return bean;
+        
+		
+    }
 	
-//	@Bean
-//	public FilterRegistrationBean processCorsFilter() {
-//	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//	final CorsConfiguration config = new CorsConfiguration();
-//	config.setAllowCredentials(true);
-//	config.addAllowedOrigin("'");
-//	config.addAllowedHeader("*");
-//	config.addAllowedMethod("*");
-//	source.registerCorsConfiguration("/**", config);
-//
-//
-//	final FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-//	bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-//	return bean;
-//	}
-	
-//	@Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-//        configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-//        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
-	// requestMatchers("/api/v1/auth/**").permitAll()
+
 }
 
